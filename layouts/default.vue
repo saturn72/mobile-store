@@ -33,7 +33,9 @@
       </v-container>
     </v-main>
     <v-bottom-navigation
+      app
       fixed
+      grow
       shift
       hide-on-scroll
       background-color="blue-grey lighten-4"
