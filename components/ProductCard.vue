@@ -23,19 +23,17 @@
         </v-card-subtitle>
         <v-text-field
           append-outer-icon="mdi-minus-circle-outline"
-          append-icon="mdi-cart x-large"
+          append-icon="mdi-cart"
           prepend-icon="mdi-plus-circle-outline"
           @click:prepend="incrementCartItem(product)"
           @click:append-outer="decrementCartItem(product)"
           v-bind:key="product.id"
           dense
-          label="כמות מוצר"
           outlined
           readonly
           rounded
-          v-bind:value="`${cartItemQuantity(product)}`"
+          v-bind:value="cartItemQuantity(product)"
         >
-          <!-- <v-icon slot="prepend" medium> mdi-plus-circle-outline </v-icon> -->
         </v-text-field>
       </v-col>
     </v-row>

@@ -39,4 +39,9 @@ export const mutations = {
 export const getters = {
     cartItemQuantity: (state: { cartItems: CartItem[] }) => (product: Product): number =>
         find(state, product)?.quantity || 0,
+    cartItemsCount: (state: { cartItems: CartItem[] }) => (): number => {
+        let c = 0;
+        state.cartItems.forEach(ci => c = c + ci.quantity);
+        return c;
+    }
 }
