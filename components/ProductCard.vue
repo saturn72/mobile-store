@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto" max-width="344">
     <v-row>
-      <v-col cols="3">
+      <v-col cols="4">
         <v-avatar class="profile" color="grey" size="100">
           <v-img :src="getPrimaryMediaItem(product.media)">
             <template v-slot:placeholder>
@@ -14,36 +14,32 @@
             </template>
           </v-img>
         </v-avatar>
+        <v-card-title>{{ product.price }} ₪ </v-card-title>
       </v-col>
       <v-col>
         <v-card-title> {{ product.name }} </v-card-title>
         <v-card-subtitle>
           {{ product.shortDescription }}
         </v-card-subtitle>
-        <v-card-subtitle>
-          <v-row>
-            <v-col cols="3">
-              <strong>{{ product.price }} ₪</strong>
-            </v-col>
-            <v-col cols="9">
-              <v-row>
-                <v-btn fab x-small color="primary" @click="addToCart()">
-                  <v-icon dark> mdi-plus </v-icon>
-                </v-btn>
-                <v-spacer />
-                <v-chip active class="ma-2" small outlined pill>
-                  10<v-icon left>mdi-cart-outline</v-icon>
-                </v-chip>
-                <v-spacer />
-                <v-btn fab x-small color="primary" @click="removeFromCart()">
-                  <v-icon dark> mdi-minus </v-icon>
-                </v-btn>
-              </v-row>
-            </v-col>
-          </v-row>
-        </v-card-subtitle>
+        <v-text-field
+          append-outer-icon="mdi-minus-circle-outline"
+          append-icon="mdi-cart x-large"
+          prepend-icon="mdi-plus-circle-outline"
+          @click:prepend="incrementCartItem(product)"
+          @click:append-outer="decrementCartItem(product)"
+          v-bind:key="product.id"
+          dense
+          label="כמות מוצר"
+          outlined
+          readonly
+          rounded
+          v-bind:value="`${cartItemQuantity(product)}`"
+        >
+          <!-- <v-icon slot="prepend" medium> mdi-plus-circle-outline </v-icon> -->
+        </v-text-field>
       </v-col>
     </v-row>
+
     <v-card-actions>
       <v-btn color="green lighten-2" text block @click="show = !show">
         <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
@@ -73,7 +69,6 @@
           </v-carousel-item>
         </v-carousel>
         <v-divider />
-
         <v-card-text>
           {{ product.fullDescription }}
         </v-card-text>
@@ -87,17 +82,22 @@ const mediaTypes = {
   video: 'video',
 }
 import VendorStoreHeader from './VendorStoreHeader'
+import { mapActions, mapGetters } from 'vuex'
 import { Product } from './models'
 export default {
   props: {
     product: Product,
   },
+  computed: {
+    ...mapGetters('cart', ['cartItemQuantity']),
+  },
   methods: {
+    ...mapActions(['incrementCartItem', 'decrementCartItem']),
     addToCart: function () {
-      this.$store.commit('cart/addItem', this.product)
+      // this.$store.commit('cart/addItem', this.product)
     },
     removeFromCart: function (product) {
-      this.$store.commit('cart/removeItem', this.product)
+      //  this.$store.commit('cart/removeItem', this.product)
     },
     getPrimaryMediaItem: function (items) {
       return (

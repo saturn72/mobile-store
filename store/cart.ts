@@ -1,41 +1,42 @@
 import { CartItem, Product } from "~/components/models";
+import _ from "lodash";
 
 export const state = () => ({
-    cartItems: []
+    cartItems: [],
 })
 
+const q = (product: Product) => (ci: CartItem) => ci.product.id === product.id
+const find = (state: { cartItems: CartItem[] }, product: Product) => state.cartItems?.find(q(product));
 export const mutations = {
-    addItem(state: any, product: Product) {
-        const q = (c: CartItem) => c.product.id === product.id;
-        const itemInCart = state.cartItems.some(q);
-        if (itemInCart) {
-            state.cartItems.push({ quantity: 1, product: product });
+    incrementCartProduct(
+        state: { cartItems: CartItem[] },
+        product: Product): void {
+        const cartProduct = find(state, product);
+        if (cartProduct) {
+            cartProduct.quantity++;
         }
         else {
-            const idx = state.cartItems.findIndex(q);
-            const u = {
-                quantity: state.cartItems[idx].quantity++,
-                product: product
-            };
-            state.cartItems[idx] = u;
+            state.cartItems.push({
+                product: product,
+                quantity: 1,
+                updatedOnUtc: new Date().getUTCDate()
+            });
         }
     },
-    removeItem(state: any, product: Product) {
-        const q = (c: CartItem) => c.product.id === product.id;
-        const itemInCart = state.cartItems.some(q);
-        if (itemInCart) {
-            const idx = state.cartItems.findIndex(q);
-            const newQty = state.cartItems[idx].quantity++;
-            if (newQty === 0) {
-                state.cartItems.splice(idx, 1)
-            }
-            else {
-                const u = {
-                    quantity: newQty,
-                    product: product
-                };
-                state.cartItems[idx] = u;
+    decrementCartProduct(
+        state: { cartItems: CartItem[] },
+        product: Product): void {
+        const cartProduct = find(state, product);
+
+        if (cartProduct && cartProduct.quantity > 0) {
+            cartProduct.quantity--;
+            if (cartProduct.quantity === 0) {
+                _.remove(state.cartItems, q(product));
             }
         }
-    },
+    }
+}
+export const getters = {
+    cartItemQuantity: (state: { cartItems: CartItem[] }) => (product: Product): number =>
+        find(state, product)?.quantity || 0,
 }

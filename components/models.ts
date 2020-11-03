@@ -21,5 +21,6 @@ export interface MediaItem {
 
 export interface CartItem {
     quantity: number,
-    product: Product
+    product: Product,
+    updatedOnUtc: Date | number
 };
