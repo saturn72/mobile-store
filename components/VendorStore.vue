@@ -1,5 +1,36 @@
 <template>
-  <div>
+  <v-container>
+    <!-- <v-speed-dial direction="right" bottom left fixed v-model="fab"> -->
+    <v-speed-dial direction="right" bottom left fixed class="mb-12">
+      <template v-slot:activator>
+        <v-btn
+          color="green darken-1"
+          elevation="24"
+          dark
+          fab
+          out
+          large
+          @click="toCheckout"
+        >
+          <v-icon> mdi-cart-check </v-icon>
+        </v-btn>
+      </template>
+      <!-- <template v-slot:activator>
+        <v-btn v-model="fab" color="green darken-1" elevation="24" dark fab out>
+          <v-icon v-if="fab"> mdi-close </v-icon>
+          <v-icon v-else> mdi-dots-vertical </v-icon>
+        </v-btn>
+      </template>
+      <v-btn fab dark small color="primary">
+        <v-icon>mdi-cart-check</v-icon>
+      </v-btn>
+      <v-btn fab dark small color="indigo">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+      <v-btn fab dark small color="red">
+        <v-icon>mdi-delete</v-icon>
+      </v-btn> -->
+    </v-speed-dial>
     <VendorStoreHeader />
     <v-divider />
     <v-row justify="center" align="center">
@@ -11,14 +42,20 @@
         <ProductCard :product="product" />
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 <script>
 import VendorStoreHeader from './VendorStoreHeader'
 import ProductCard from './ProductCard'
 export default {
+  methods: {
+    toCheckout: function () {
+      console.log('redirects to checout page')
+    },
+  },
   data() {
     return {
+      fab: false,
       catalog: {
         products: [
           {

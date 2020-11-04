@@ -1,23 +1,41 @@
 <template>
-  <v-card class="mx-auto" max-width="344">
-    <v-row>
-      <v-col cols="4">
-        <ProductAvatar :product="product" />
-        <v-card-title>{{ product.price }} ₪ </v-card-title>
+  <v-card class="mx-auto" max-height="auto">
+    <v-row dense>
+      <v-col cols="4" dense>
+        <ProductAvatar :product="product" class="mr-1" />
       </v-col>
-      <v-col>
+      <v-col cols="8" dense>
         <v-card-title> {{ product.name }} </v-card-title>
         <v-card-subtitle>
           {{ product.shortDescription }}
         </v-card-subtitle>
+        <v-row dense justify="center">
+          <h3 class="font-weight-bold accent--text">{{ product.price }} ₪</h3>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            class="mx-auto"
+            color="green lighten-2"
+            text
+            @click="show = !show"
+          >
+            <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+            <v-spacer></v-spacer>
+            More info
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col cols="8" dense>
         <v-text-field
+          dense
           append-outer-icon="mdi-minus-circle-outline"
           append-icon="mdi-cart"
           prepend-icon="mdi-plus-circle-outline"
           @click:prepend="incrementCartItem(product)"
           @click:append-outer="decrementCartItem(product)"
           v-bind:key="product.id"
-          dense
           outlined
           readonly
           rounded
@@ -25,15 +43,9 @@
         >
         </v-text-field>
       </v-col>
+      <v-col cols="4" dense> </v-col>
     </v-row>
 
-    <v-card-actions>
-      <v-btn color="green lighten-2" text block @click="show = !show">
-        <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-        <v-spacer></v-spacer>
-        Explore
-      </v-btn>
-    </v-card-actions>
     <v-expand-transition>
       <div v-show="show">
         <v-carousel hide-delimiters height="auto">

@@ -37,10 +37,10 @@
           <template>
             <thead>
               <tr>
-                <th class="text-left">שם</th>
-                <th class="text-left">מחיר ליחידה</th>
-                <th class="text-left">כמות</th>
-                <th class="text-left">סה"כ לפריט</th>
+                <th class="text-left">Name</th>
+                <th class="text-left">Price</th>
+                <th class="text-left">Quantity</th>
+                <th class="text-left">Item Total</th>
               </tr>
             </thead>
             <tbody>
@@ -56,7 +56,7 @@
                 <td>{{ ci.product.price * ci.quantity }}</td>
               </tr>
               <tr>
-                <td>סה"כ</td>
+                <td>Cart Total</td>
                 <td></td>
                 <td></td>
                 <td>{{ getCartTotal() }}</td>
@@ -64,8 +64,14 @@
             </tbody>
           </template>
         </v-simple-table>
-        <v-btn class="ma-2" color="success" :disabled="getCartTotal() === 0">
-          <v-icon>mdi-store</v-icon>
+        <v-btn
+          class="ma-2"
+          block
+          color="success"
+          @click="toCheckout"
+          :disabled="getCartTotal() === 0"
+        >
+          <v-icon>mdi-cart-check</v-icon>
           Checkout
         </v-btn>
       </v-card>
@@ -101,6 +107,9 @@ export default {
         (ci) => (total += ci.quantity * ci.product.price)
       )
       return total
+    },
+    toCheckout: function () {
+      console.log('redirect to checkout')
     },
   },
   data() {
