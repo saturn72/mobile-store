@@ -18,7 +18,14 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-navigation-drawer v-model="cartDrawer" fixed app left>
+    <v-navigation-drawer
+      v-model="cartDrawer"
+      fixed
+      app
+      left
+      width="auto"
+      height="80%"
+    >
       <v-card>
         <v-list-item>
           <v-list-item-content>
@@ -27,7 +34,7 @@
                 <v-list-item-avatar>
                   <v-icon>mdi-cart</v-icon>
                 </v-list-item-avatar>
-                עגלת קניות
+                Shopping Cart
               </v-list-item-title>
             </v-row>
           </v-list-item-content>
@@ -108,8 +115,8 @@ export default {
       )
       return total
     },
-    toCheckout: function () {
-      console.log('redirect to checkout')
+    toCheckout: function ({ redirect }) {
+      this.$router.push('/checkout')
     },
   },
   data() {
@@ -125,9 +132,9 @@ export default {
           to: '/',
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          icon: 'mdi-cart-check',
+          title: 'Checkout',
+          to: '/checkout',
         },
       ],
       title: 'קדם מרקט',

@@ -50,7 +50,7 @@ import ProductCard from './ProductCard'
 export default {
   methods: {
     toCheckout: function () {
-      console.log('redirects to checout page')
+      this.$router.push('/checkout')
     },
   },
   data() {
