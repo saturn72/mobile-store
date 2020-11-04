@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" :clipped="clipped" fixed app right>
+    <v-navigation-drawer v-model="menuDrawer" fixed app right>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -18,17 +18,69 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    <v-navigation-drawer v-model="cartDrawer" fixed app left>
+      <v-card>
+        <v-list-item>
+          <v-list-item-content>
+            <v-row>
+              <v-list-item-title class="title">
+                <v-list-item-avatar>
+                  <v-icon>mdi-cart</v-icon>
+                </v-list-item-avatar>
+                עגלת קניות
+              </v-list-item-title>
+            </v-row>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-simple-table fixed-header dense>
+          <template>
+            <thead>
+              <tr>
+                <th class="text-left">שם</th>
+                <th class="text-left">מחיר ליחידה</th>
+                <th class="text-left">כמות</th>
+                <th class="text-left">סה"כ לפריט</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="ci in cartItems()" :key="ci.product.id" flex>
+                <td>
+                  <v-row
+                    ><ProductAvatar :product="ci.product" v-bind:size="40"
+                  /></v-row>
+                  <v-row>{{ ci.product.name }}</v-row>
+                </td>
+                <td>{{ ci.product.price }}</td>
+                <td>{{ ci.quantity }}</td>
+                <td>{{ ci.product.price * ci.quantity }}</td>
+              </tr>
+              <tr>
+                <td>סה"כ</td>
+                <td></td>
+                <td></td>
+                <td>{{ getCartTotal() }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+        <v-btn class="ma-2" color="success" :disabled="getCartTotal() === 0">
+          <v-icon>mdi-store</v-icon>
+          Checkout
+        </v-btn>
+      </v-card>
+    </v-navigation-drawer>
+
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon @click.stop="menuDrawer = !menuDrawer" />
       <v-spacer />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn icon @click.stop="fixed = !fixed">
+      <v-btn icon @click.stop="cartDrawer = !cartDrawer">
         <v-badge
           v-if="cartItemsCount() > 0"
           v-bind:content="cartItemsCount()"
           color="success"
-          offset-x="5"
         >
         </v-badge>
         <v-icon>mdi-cart</v-icon>
@@ -40,12 +92,22 @@
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters('cart', ['cartItemsCount']),
+    ...mapGetters('cart', ['cartItemsCount', 'cartItems']),
+  },
+  methods: {
+    getCartTotal: function () {
+      let total = 0
+      this.cartItems().forEach(
+        (ci) => (total += ci.quantity * ci.product.price)
+      )
+      return total
+    },
   },
   data() {
     return {
       clipped: false,
-      drawer: false,
+      menuDrawer: false,
+      cartDrawer: false,
       fixed: false,
       items: [
         {

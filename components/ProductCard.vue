@@ -2,18 +2,7 @@
   <v-card class="mx-auto" max-width="344">
     <v-row>
       <v-col cols="4">
-        <v-avatar class="profile" color="grey" size="100">
-          <v-img :src="getPrimaryMediaItem(product.media)">
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="black"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-avatar>
+        <ProductAvatar :product="product" />
         <v-card-title>{{ product.price }} ₪ </v-card-title>
       </v-col>
       <v-col>
@@ -91,19 +80,6 @@ export default {
   },
   methods: {
     ...mapActions(['incrementCartItem', 'decrementCartItem']),
-    addToCart: function () {
-      // this.$store.commit('cart/addItem', this.product)
-    },
-    removeFromCart: function (product) {
-      //  this.$store.commit('cart/removeItem', this.product)
-    },
-    getPrimaryMediaItem: function (items) {
-      return (
-        items.images.find((i) => i.isPrimary) ??
-        items.videos.find((i) => i.isPrimary) ??
-        items[0]
-      )
-    },
     mediaToCarouselItems: function (media) {
       const imgs = media.images.map((i) => {
         return {

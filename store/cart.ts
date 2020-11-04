@@ -43,5 +43,6 @@ export const getters = {
         let c = 0;
         state.cartItems.forEach(ci => c = c + ci.quantity);
         return c;
-    }
+    },
+    cartItems: (state: { cartItems: CartItem[] }) => (): CartItem[] => state.cartItems,
 }
