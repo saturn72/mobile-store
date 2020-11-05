@@ -39,7 +39,7 @@
             </v-row>
           </v-list-item-content>
         </v-list-item>
-
+        <CartSummary />
         <v-simple-table fixed-header dense>
           <template>
             <thead>
