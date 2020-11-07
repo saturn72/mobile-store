@@ -1,12 +1,26 @@
-import { CartItem, Product } from "~/components/models";
+import { CartItem, MediaItem, Product } from "~/components/models";
 import _ from "lodash";
 
 export const state = () => ({
     cartItems: [],
 })
 
+const DEFAULT_CART_IMAGE: MediaItem =  
 const q = (product: Product) => (ci: CartItem) => ci.product.id === product.id
 const find = (state: { cartItems: CartItem[] }, product: Product) => state.cartItems?.find(q(product));
+
+const buildCartRecord = (product: Product, quantity: number): CartItem => {
+    const p = {
+        ...product,
+        cartImage: product.media.images.cartImage ?? product.media.images.all.find(i => i.isPrimary) ?? DEFAULT_CART_IMAGE
+    };
+
+    return {
+        product: p,
+        quantity: 1,
+        updatedOnUtc: new Date().getUTCDate()
+    };
+}
 export const mutations = {
     incrementCartProduct(
         state: { cartItems: CartItem[] },
@@ -16,11 +30,7 @@ export const mutations = {
             cartProduct.quantity++;
         }
         else {
-            state.cartItems.push({
-                product: product,
-                quantity: 1,
-                updatedOnUtc: new Date().getUTCDate()
-            });
+            state.cartItems.push(buildCartRecord(product, 1));
         }
     },
     decrementCartProduct(
@@ -45,4 +55,11 @@ export const getters = {
         return c;
     },
     cartItems: (state: { cartItems: CartItem[] }) => (): CartItem[] => state.cartItems,
+    cartTotal: (state: { cartItems: CartItem[] }) => (): number => {
+        let total = 0
+        state.cartItems.forEach(
+            (ci) => (total += ci.quantity * ci.product.price)
+        )
+        return total
+    },
 }

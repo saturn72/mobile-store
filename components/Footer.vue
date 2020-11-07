@@ -9,19 +9,15 @@
       background-color="blue-grey lighten-4"
       color="teal darken-3"
     >
-      <v-btn value="wishlist">
-        <span>Wishlist</span>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-      <v-btn value="messages">
+      <v-btn value="messages" to="/messages">
         <span>Messages</span>
         <v-icon>mdi-message</v-icon>
       </v-btn>
-      <v-btn value="account">
+      <v-btn value="account" to="/account">
         <span>Account</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
-      <v-btn value="home">
+      <v-btn value="home" to="/">
         <span>Home</span>
         <v-icon>mdi-home</v-icon>
       </v-btn>

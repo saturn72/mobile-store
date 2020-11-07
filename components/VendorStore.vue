@@ -1,36 +1,7 @@
 <template>
   <v-container fluid>
     <!-- <v-speed-dial direction="right" bottom left fixed v-model="fab"> -->
-    <v-speed-dial direction="right" bottom left fixed class="mb-12">
-      <template v-slot:activator>
-        <v-btn
-          color="green darken-1"
-          elevation="24"
-          dark
-          fab
-          out
-          large
-          @click="toCheckout"
-        >
-          <v-icon> mdi-cart-check </v-icon>
-        </v-btn>
-      </template>
-      <!-- <template v-slot:activator>
-        <v-btn v-model="fab" color="green darken-1" elevation="24" dark fab out>
-          <v-icon v-if="fab"> mdi-close </v-icon>
-          <v-icon v-else> mdi-dots-vertical </v-icon>
-        </v-btn>
-      </template>
-      <v-btn fab dark small color="primary">
-        <v-icon>mdi-cart-check</v-icon>
-      </v-btn>
-      <v-btn fab dark small color="indigo">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-      <v-btn fab dark small color="red">
-        <v-icon>mdi-delete</v-icon>
-      </v-btn> -->
-    </v-speed-dial>
+    <SpeedDial />
     <v-data-iterator
       :items="products"
       :items-per-page.sync="products.length"
@@ -79,8 +50,15 @@
 
       <VendorStoreHeader />
       <v-divider />
-      <v-row justify="center" align="center">
-        <v-col cols="12" v-for="product in products" v-bind:key="product.id">
+      <v-row  align="center">
+        <v-col
+          cols="12"
+          lg="3"
+          md="6"
+          sm="12"
+          v-for="product in products"
+          v-bind:key="product.id"
+        >
           <ProductCard :product="product" />
         </v-col>
       </v-row>
@@ -97,9 +75,6 @@ export default {
     this.search = this.$route.query.q?.toString() || ''
   },
   methods: {
-    toCheckout: function () {
-      this.$router.push('/checkout')
-    },
     clearSearch() {
       this.search = ''
     },

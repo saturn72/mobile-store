@@ -40,43 +40,12 @@
           </v-list-item-content>
         </v-list-item>
         <CartSummary />
-        <v-simple-table fixed-header dense>
-          <template>
-            <thead>
-              <tr>
-                <th class="text-left">Name</th>
-                <th class="text-left">Price</th>
-                <th class="text-left">Quantity</th>
-                <th class="text-left">Item Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="ci in cartItems()" :key="ci.product.id" flex>
-                <td>
-                  <v-row
-                    ><ProductAvatar :product="ci.product" v-bind:size="40"
-                  /></v-row>
-                  <v-row>{{ ci.product.name }}</v-row>
-                </td>
-                <td>{{ ci.product.price }}</td>
-                <td>{{ ci.quantity }}</td>
-                <td>{{ ci.product.price * ci.quantity }}</td>
-              </tr>
-              <tr>
-                <td>Cart Total</td>
-                <td></td>
-                <td></td>
-                <td>{{ getCartTotal() }}</td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
         <v-btn
           class="ma-2"
           block
           color="success"
-          @click="toCheckout"
-          :disabled="getCartTotal() === 0"
+          to="/checkout"
+          :disabled="cartTotal() === 0"
         >
           <v-icon>mdi-cart-check</v-icon>
           Checkout
@@ -105,19 +74,7 @@
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters('cart', ['cartItemsCount', 'cartItems']),
-  },
-  methods: {
-    getCartTotal: function () {
-      let total = 0
-      this.cartItems().forEach(
-        (ci) => (total += ci.quantity * ci.product.price)
-      )
-      return total
-    },
-    toCheckout: function ({ redirect }) {
-      this.$router.push('/checkout')
-    },
+    ...mapGetters('cart', ['cartItemsCount', 'cartItems', 'cartTotal']),
   },
   data() {
     return {

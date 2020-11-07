@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-height="auto">
+  <v-card max-height="auto">
     <v-row dense>
       <v-col cols="4" dense>
         <ProductAvatar :product="product" class="mr-1" />

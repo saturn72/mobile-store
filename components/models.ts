@@ -6,7 +6,10 @@ export interface Product {
     price: number;
 
     media: {
-        images: Array<MediaItem>;
+        images: {
+            cartImage: MediaItem,
+            all: Array<MediaItem>;
+        },
         videos: Array<MediaItem>;
     };
 };
