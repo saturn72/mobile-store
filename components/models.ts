@@ -6,10 +6,8 @@ export interface Product {
     price: number;
 
     media: {
-        images: {
-            cartImage: MediaItem,
-            all: Array<MediaItem>;
-        },
+        cartImage: string;
+        images: Array<MediaItem>;
         videos: Array<MediaItem>;
     };
 };

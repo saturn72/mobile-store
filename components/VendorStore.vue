@@ -50,7 +50,7 @@
 
       <VendorStoreHeader />
       <v-divider />
-      <v-row  align="center">
+      <v-row align="center">
         <v-col
           cols="12"
           lg="3"

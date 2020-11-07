@@ -19,13 +19,13 @@
           </td>
           <td>{{ ci.product.price }}</td>
           <td>{{ ci.quantity }}</td>
-          <td>{{ ci.product.price * ci.quantity }}</td>
+          <td>{{ (ci.product.price * ci.quantity).toFixed(2) }}</td>
         </tr>
         <tr>
           <td>Cart Total</td>
           <td></td>
           <td></td>
-          <td>{{ cartTotal() }}</td>
+          <td>{{ cartTotal().toFixed(2) }}</td>
         </tr>
       </tbody>
     </template>

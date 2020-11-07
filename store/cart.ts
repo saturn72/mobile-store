@@ -1,18 +1,18 @@
-import { CartItem, MediaItem, Product } from "~/components/models";
+import { CartItem, Product } from "~/components/models";
 import _ from "lodash";
 
 export const state = () => ({
     cartItems: [],
 })
 
-const DEFAULT_CART_IMAGE: MediaItem =  
+const DEFAULT_CART_IMAGE: string = 'https://kedemmarket.co.il/wp-content/uploads/2020/07/logodesign-scaled.jpg';
 const q = (product: Product) => (ci: CartItem) => ci.product.id === product.id
 const find = (state: { cartItems: CartItem[] }, product: Product) => state.cartItems?.find(q(product));
 
 const buildCartRecord = (product: Product, quantity: number): CartItem => {
     const p = {
         ...product,
-        cartImage: product.media.images.cartImage ?? product.media.images.all.find(i => i.isPrimary) ?? DEFAULT_CART_IMAGE
+        cartImage: product.media.cartImage ?? product.media.images.find(i => i.isPrimary) ?? DEFAULT_CART_IMAGE
     };
 
     return {

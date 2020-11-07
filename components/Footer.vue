@@ -11,15 +11,15 @@
     >
       <v-btn value="messages" to="/messages">
         <span>Messages</span>
-        <v-icon>mdi-message</v-icon>
+        <v-icon>mdi-message-outline</v-icon>
       </v-btn>
       <v-btn value="account" to="/account">
         <span>Account</span>
-        <v-icon>mdi-account</v-icon>
+        <v-icon>mdi-account-outline</v-icon>
       </v-btn>
-      <v-btn value="home" to="/">
-        <span>Home</span>
-        <v-icon>mdi-home</v-icon>
+      <v-btn value="store" to="/">
+        <span>Store</span>
+        <v-icon>mdi-storefront-outline</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-footer>
