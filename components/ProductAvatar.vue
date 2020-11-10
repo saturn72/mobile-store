@@ -13,7 +13,7 @@
   </v-avatar>
 </template>
 <script>
-import { Product } from './models'
+import { Product } from '@/domain/models'
 export default {
   props: {
     product: { type: Product },

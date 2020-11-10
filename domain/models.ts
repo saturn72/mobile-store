@@ -25,3 +25,9 @@ export interface CartItem {
     product: Product,
     updatedOnUtc: Date | number
 };
+
+export interface Cart {
+    cartItems: CartItem[],
+    phonePrefix: String,
+    phoneNumber: String
+};

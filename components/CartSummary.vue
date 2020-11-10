@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="ci in cartItems()" :key="ci.product.id" flex>
+        <tr v-for="ci in getCart().cartItems" :key="ci.product.id" flex>
           <td>
             <v-row
               ><ProductAvatar :product="ci.product" v-bind:size="40"
@@ -25,7 +25,7 @@
           <td>Cart Total</td>
           <td></td>
           <td></td>
-          <td>{{ cartTotal().toFixed(2) }}</td>
+          <td>{{ getCartTotal().toFixed(2) }}</td>
         </tr>
       </tbody>
     </template>
@@ -35,7 +35,7 @@
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters('cart', ['cartItems', 'cartTotal']),
+    ...mapGetters('cart', ['getCart', 'getCartTotal']),
   },
 }
 </script>

@@ -45,7 +45,23 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    '@nuxtjs/firebase',
   ],
+  firebase: {
+    config: {
+      apiKey: '<apiKey>',
+      authDomain: '<authDomain>',
+      databaseURL: '<databaseURL>',
+      projectId: '<projectId>',
+      storageBucket: '<storageBucket>',
+      messagingSenderId: '<messagingSenderId>',
+      appId: '<appId>',
+      measurementId: '<measurementId>'
+    },
+    services: {
+      firestore: true, //see:https://firebase.nuxtjs.org/guide/options
+    }
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},

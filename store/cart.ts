@@ -1,7 +1,10 @@
-import { CartItem, Product } from "~/components/models";
+import { Cart, CartItem, Product } from "@/domain/models";
 import _ from "lodash";
+import cartHandler from "~/services/cartHandler";
 
 export const state = () => ({
+    phonePrefix: '',
+    phoneNumber: '',
     cartItems: [],
 })
 
@@ -23,39 +26,70 @@ const buildCartRecord = (product: Product, quantity: number): CartItem => {
 }
 export const mutations = {
     incrementCartProduct(
-        state: { cartItems: CartItem[] },
+        state: Cart,
         product: Product): void {
-        const cartProduct = find(state, product);
-        if (cartProduct) {
-            cartProduct.quantity++;
+
+        const cartBefore = _.cloneDeep(state.cartItems);
+        const cartItem = find(state, product);
+        if (cartItem) {
+            cartItem.quantity++;
         }
         else {
             state.cartItems.push(buildCartRecord(product, 1));
         }
+        const cartAfter = _.cloneDeep(state.cartItems);
+        cartHandler.onCartChanged(cartBefore, cartAfter);
     },
     decrementCartProduct(
-        state: { cartItems: CartItem[] },
+        state: Cart,
         product: Product): void {
-        const cartProduct = find(state, product);
+        const cartBefore = _.cloneDeep(state.cartItems);
 
-        if (cartProduct && cartProduct.quantity > 0) {
-            cartProduct.quantity--;
-            if (cartProduct.quantity === 0) {
+        const cartItem = find(state, product);
+
+        if (cartItem && cartItem.quantity > 0) {
+            cartItem.quantity--;
+            if (cartItem.quantity === 0) {
                 _.remove(state.cartItems, q(product));
             }
         }
-    }
+        const cartAfter = _.cloneDeep(state.cartItems);
+        cartHandler.onCartChanged(cartBefore, cartAfter);
+    },
+    setPhonePrefix: (
+        state: Cart,
+        phonePrefix: String): void => {
+        state.phonePrefix = phonePrefix;
+    },
+    setPhoneNumber: (
+        state: Cart,
+        phoneNumber: String): void => {
+        state.phoneNumber = phoneNumber;
+    },
 }
 export const getters = {
-    cartItemQuantity: (state: { cartItems: CartItem[] }) => (product: Product): number =>
+    cartTotal: (state: Cart) => (): number => {
+        let total = 0
+        state.cartItems.forEach(
+            (ci) => (total += ci.quantity * ci.product.price)
+        )
+        return total
+    },
+    getPhonePrefix: (state: Cart) => (): String => {
+        return state.phonePrefix;
+    },
+    getPhoneNumber: (state: Cart) => (): String => {
+        return state.phoneNumber;
+    },
+    getCartItemQuantity: (state: Cart) => (product: Product): number =>
         find(state, product)?.quantity || 0,
-    cartItemsCount: (state: { cartItems: CartItem[] }) => (): number => {
+    getCartItemsCount: (state: Cart) => (): number => {
         let c = 0;
         state.cartItems.forEach(ci => c = c + ci.quantity);
         return c;
     },
-    cartItems: (state: { cartItems: CartItem[] }) => (): CartItem[] => state.cartItems,
-    cartTotal: (state: { cartItems: CartItem[] }) => (): number => {
+    getCart: (state: Cart) => (): { cartItems: CartItem[] } => state,
+    getCartTotal: (state: Cart) => (): number => {
         let total = 0
         state.cartItems.forEach(
             (ci) => (total += ci.quantity * ci.product.price)

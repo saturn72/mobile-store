@@ -20,8 +20,17 @@
         "./*"
       ],
       "@/*": [
-        "./*"
-      ]
+        "./*",
+      ],
+      "@/domain": [
+        "./domain/*",
+      ],
+      "@services": [
+        "./services/*",
+      ],
+      "@store": [
+        "./store/*",
+      ],
     },
     "types": [
       "@types/node",

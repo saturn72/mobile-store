@@ -20,22 +20,22 @@
                 outlined
                 dense
                 clearable
-                v-model="orderPhoneNumber"
+                v-model="phoneNumber"
                 placeholder="טלפון"
                 type="number"
-                :rules="phoneNumber.rules"
-                v-bind:maxlength="phoneNumber.requiredPhoneLength"
-                v-bind:minlength="phoneNumber.requiredPhoneLength"
+                :rules="phoneNumberMeta.rules"
+                v-bind:maxlength="phoneNumberMeta.requiredPhoneLength"
+                v-bind:minlength="phoneNumberMeta.requiredPhoneLength"
               ></v-text-field>
             </v-col>
             <v-col class="d-flex" cols="5" sm="5">
               <v-select
                 autofocus
-                :items="phoneNumber.phonePrefixOptions"
+                :items="phoneNumberMeta.phonePrefixOptions"
                 label="קידומת"
                 dense
                 outlined
-                v-model="orderPhonePrefix"
+                v-model="phonePrefix"
               ></v-select>
             </v-col>
           </v-row>
@@ -96,17 +96,42 @@
   </v-container>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import orderHandler from '@/services/orderHandler'
 export default {
   computed: {
-    ...mapGetters('cart', ['cartItemsCount']),
+    ...mapGetters('cart', [
+      'getCartItemsCount',
+      'getPhonePrefix',
+      'getPhoneNumber',
+    ]),
+    phonePrefix: {
+      get: function () {
+        return this.getPhonePrefix()
+      },
+      set: function (prefix) {
+        console.log(prefix)
+        this.setPhonePrefix(prefix)
+      },
+    },
+    phoneNumber: {
+      get: function () {
+        return this.getPhoneNumber()
+      },
+      set: function (num) {
+        this.setPhoneNumber(num)
+      },
+    },
   },
   methods: {
+    ...mapActions(['setPhonePrefix', 'setPhoneNumber']),
     canPlaceOrder() {
-      return this.valid && this.cartItemsCount() > 0
+      return this.valid && this.getCartItemsCount() > 0
     },
-    placeOrder() {
+    async placeOrder() {
       this.orderOverlay = true
+      await orderHandler.placeOrder()
+      this.orderOverlay = false
     },
   },
   data() {
@@ -114,9 +139,7 @@ export default {
       valid: false,
       orderOverlay: false,
       orderComment: '',
-      orderPhonePrefix: '',
-      orderPhoneNumber: '',
-      phoneNumber: {
+      phoneNumberMeta: {
         requiredPhoneLength: 7,
         value: '',
         phonePrefixOptions: ['050', '051', '052', '053', '054', '055', '058'],

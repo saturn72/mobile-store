@@ -24,7 +24,7 @@
       fab
       small
       color="primary"
-      :disabled="cartItemsCount() === 0"
+      :disabled="getCartItemsCount() === 0"
       @click="checkout()"
     >
       <v-icon>mdi-cart-check</v-icon>
@@ -42,7 +42,7 @@ const CheckoutPath = 'checkout'
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters('cart', ['cartItemsCount']),
+    ...mapGetters('cart', ['getCartItemsCount']),
   },
   methods: {
     isCheckoutPage() {

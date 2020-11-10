@@ -39,7 +39,7 @@
           outlined
           readonly
           rounded
-          v-bind:value="cartItemQuantity(product)"
+          v-bind:value="getCartItemQuantity(product)"
         >
         </v-text-field>
       </v-col>
@@ -82,13 +82,13 @@ const mediaTypes = {
 }
 import VendorStoreHeader from './VendorStoreHeader'
 import { mapActions, mapGetters } from 'vuex'
-import { Product } from './models'
+import { Product } from '@/domain/models'
 export default {
   props: {
     product: Product,
   },
   computed: {
-    ...mapGetters('cart', ['cartItemQuantity']),
+    ...mapGetters('cart', ['getCartItemQuantity']),
   },
   methods: {
     ...mapActions(['incrementCartItem', 'decrementCartItem']),

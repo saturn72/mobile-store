@@ -45,7 +45,7 @@
           block
           color="success"
           to="/checkout"
-          :disabled="cartItemsCount() === 0"
+          :disabled="getCartItemsCount() === 0"
         >
           <v-icon>mdi-cart-check</v-icon>
           Checkout
@@ -60,8 +60,8 @@
       <v-spacer />
       <v-btn icon @click.stop="cartDrawer = !cartDrawer">
         <v-badge
-          v-if="cartItemsCount() > 0"
-          v-bind:content="cartItemsCount()"
+          v-if="getCartItemsCount() > 0"
+          v-bind:content="getCartItemsCount()"
           color="success"
         >
         </v-badge>
@@ -74,7 +74,7 @@
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters('cart', ['cartItemsCount', 'cartItems']),
+    ...mapGetters('cart', ['getCartItemsCount']),
   },
   data() {
     return {

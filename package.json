@@ -6,15 +6,19 @@
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate"
+    "generate": "nuxt-ts generate",
+    "firebase": "firebase emulators:start"
   },
   "dependencies": {
+    "@firebase/app": "^0.6.13",
     "@nuxt/content": "^1.9.0",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/firebase": "^7.1.0",
     "@nuxtjs/pwa": "^3.0.2",
     "@types/lodash": "^4.14.164",
     "core-js": "^3.6.5",
+    "firebase": "^8.0.1",
     "lodash": "^4.17.20",
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.15.4"
