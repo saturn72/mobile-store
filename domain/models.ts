@@ -45,6 +45,6 @@ export interface Order {
 
 export interface OrderProcutRecord {
     quantity: number,
-    productId: string,
+    product: Product,
 };
 

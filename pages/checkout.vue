@@ -135,13 +135,20 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapActions(['setPhonePrefix', 'setPhoneNumber', 'setComment']),
+    ...mapActions([
+      'setPhonePrefix',
+      'setPhoneNumber',
+      'setComment',
+      'clearCart',
+    ]),
     canPlaceOrder() {
       return this.valid && this.getCartItemsCount() > 0
     },
     async placeOrder() {
       this.orderOverlay = true
-      await orderHandler.placeOrder(this.getCart())
+      const order = await orderHandler.placeOrder(this.getCart())
+      console.log(order)
+      this.clearCart()
       this.orderOverlay = false
     },
   },

@@ -27,11 +27,24 @@ const buildCartRecord = (product: Product, quantity: number): CartItem => {
     };
 }
 export const mutations = {
+    clearCart(state: Cart): void {
+        const cartBefore = _.cloneDeep(state);
+        state = {
+            phonePrefix: '',
+            phoneNumber: '',
+            cartItems: [],
+            comment: ''
+        };
+
+        const cartAfter = _.cloneDeep(state);
+        cartHandler.onCartChanged(cartBefore, cartAfter);
+
+    },
     incrementCartProduct(
         state: Cart,
         product: Product): void {
 
-        const cartBefore = _.cloneDeep(state.cartItems);
+        const cartBefore = _.cloneDeep(state);
         const cartItem = find(state, product);
         if (cartItem) {
             cartItem.quantity++;
@@ -39,13 +52,13 @@ export const mutations = {
         else {
             state.cartItems.push(buildCartRecord(product, 1));
         }
-        const cartAfter = _.cloneDeep(state.cartItems);
+        const cartAfter = _.cloneDeep(state);
         cartHandler.onCartChanged(cartBefore, cartAfter);
     },
     decrementCartProduct(
         state: Cart,
         product: Product): void {
-        const cartBefore = _.cloneDeep(state.cartItems);
+        const cartBefore = _.cloneDeep(state);
 
         const cartItem = find(state, product);
 
@@ -55,23 +68,32 @@ export const mutations = {
                 _.remove(state.cartItems, q(product));
             }
         }
-        const cartAfter = _.cloneDeep(state.cartItems);
+        const cartAfter = _.cloneDeep(state);
         cartHandler.onCartChanged(cartBefore, cartAfter);
     },
     setPhonePrefix: (
         state: Cart,
         phonePrefix: string): void => {
+        const cartBefore = _.cloneDeep(state);
         state.phonePrefix = phonePrefix;
+        const cartAfter = _.cloneDeep(state);
+        cartHandler.onCartChanged(cartBefore, cartAfter);
     },
     setPhoneNumber: (
         state: Cart,
         phoneNumber: string): void => {
+        const cartBefore = _.cloneDeep(state);
         state.phoneNumber = phoneNumber;
+        const cartAfter = _.cloneDeep(state);
+        cartHandler.onCartChanged(cartBefore, cartAfter);
     },
     setComment: (
         state: Cart,
         comment: string): void => {
+        const cartBefore = _.cloneDeep(state);
         state.comment = comment;
+        const cartAfter = _.cloneDeep(state);
+        cartHandler.onCartChanged(cartBefore, cartAfter);
     },
 }
 export const getters = {

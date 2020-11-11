@@ -1,4 +1,7 @@
-import { Cart, Product } from "~/domain/models";
+import { Product } from "~/domain/models";
+import createPersistedState from "vuex-persistedstate";
+
+export const plugins = [createPersistedState];
 
 export default {
     actions: {
@@ -16,6 +19,9 @@ export default {
         },
         setComment(ctx: any, comment: string) {
             ctx.commit("cart/setComment", comment)
-        }
+        },
+        clearCart(ctx: any) {
+            ctx.commit("cart/clearCart")
+        },
     }
 };

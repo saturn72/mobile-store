@@ -6,7 +6,7 @@ const cartToOrder = (cart: Cart): Order => {
     const prs: OrderProcutRecord[] = [];
     cart.cartItems.forEach(ci => prs.push({
         quantity: ci.quantity,
-        productId: ci.product.id
+        product: ci.product
     }));
 
     return {
@@ -22,7 +22,7 @@ const cartToOrder = (cart: Cart): Order => {
 export default {
     placeOrder: async (cart: Cart): Promise<any> => {
         const order = cartToOrder(cart);
-        const id = await fb.add('orders', order)
-        console.log("this is the order id: " + id)
+        order.id = await fb.add('orders', order)
+        return order;
     }
 };
