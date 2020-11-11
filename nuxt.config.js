@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-
+const isDev = process.env.NODE_ENV === 'development';
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
@@ -49,17 +49,22 @@ export default {
   ],
   firebase: {
     config: {
-      apiKey: '<apiKey>',
-      authDomain: '<authDomain>',
-      databaseURL: '<databaseURL>',
-      projectId: '<projectId>',
-      storageBucket: '<storageBucket>',
-      messagingSenderId: '<messagingSenderId>',
-      appId: '<appId>',
-      measurementId: '<measurementId>'
+      apiKey: "AIzaSyDntIWEL6DuVX9IeB4rWSi-Wmt4x_v01bM",
+      authDomain: "fast-store-2203c.firebaseapp.com",
+      databaseURL: "https://fast-store-2203c.firebaseio.com",
+      projectId: "fast-store-2203c",
+      storageBucket: "fast-store-2203c.appspot.com",
+      messagingSenderId: "106372924542",
+      appId: "1:106372924542:web:ef9b0283f991204b80042f",
+      measurementId: "G-1QWWB3T4PH"
     },
     services: {
-      firestore: true, //see:https://firebase.nuxtjs.org/guide/options
+      //see:https://firebase.nuxtjs.org/guide/options
+      firestore: {
+        memoryOnly: false,
+        emulatorPort: isDev ? 8080 : false,
+        ssl: isDev || true
+      }
     }
   },
 

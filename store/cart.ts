@@ -1,11 +1,13 @@
 import { Cart, CartItem, Product } from "@/domain/models";
 import _ from "lodash";
 import cartHandler from "~/services/cartHandler";
+import dateTimeUtil from "~/utilities/dateTimeUtil";
 
-export const state = () => ({
+export const state = (): Cart => ({
     phonePrefix: '',
     phoneNumber: '',
     cartItems: [],
+    comment: ''
 })
 
 const DEFAULT_CART_IMAGE: string = 'https://kedemmarket.co.il/wp-content/uploads/2020/07/logodesign-scaled.jpg';
@@ -21,7 +23,7 @@ const buildCartRecord = (product: Product, quantity: number): CartItem => {
     return {
         product: p,
         quantity: 1,
-        updatedOnUtc: new Date().getUTCDate()
+        updatedOnUtc: dateTimeUtil.currentUtc()
     };
 }
 export const mutations = {
@@ -58,28 +60,29 @@ export const mutations = {
     },
     setPhonePrefix: (
         state: Cart,
-        phonePrefix: String): void => {
+        phonePrefix: string): void => {
         state.phonePrefix = phonePrefix;
     },
     setPhoneNumber: (
         state: Cart,
-        phoneNumber: String): void => {
+        phoneNumber: string): void => {
         state.phoneNumber = phoneNumber;
+    },
+    setComment: (
+        state: Cart,
+        comment: string): void => {
+        state.comment = comment;
     },
 }
 export const getters = {
-    cartTotal: (state: Cart) => (): number => {
-        let total = 0
-        state.cartItems.forEach(
-            (ci) => (total += ci.quantity * ci.product.price)
-        )
-        return total
-    },
-    getPhonePrefix: (state: Cart) => (): String => {
+    getPhonePrefix: (state: Cart) => (): string => {
         return state.phonePrefix;
     },
-    getPhoneNumber: (state: Cart) => (): String => {
+    getPhoneNumber: (state: Cart) => (): string => {
         return state.phoneNumber;
+    },
+    getComment: (state: Cart) => (): string => {
+        return state.comment;
     },
     getCartItemQuantity: (state: Cart) => (product: Product): number =>
         find(state, product)?.quantity || 0,
@@ -88,7 +91,7 @@ export const getters = {
         state.cartItems.forEach(ci => c = c + ci.quantity);
         return c;
     },
-    getCart: (state: Cart) => (): { cartItems: CartItem[] } => state,
+    getCart: (state: Cart) => (): Cart => state,
     getCartTotal: (state: Cart) => (): number => {
         let total = 0
         state.cartItems.forEach(

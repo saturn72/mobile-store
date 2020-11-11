@@ -1,10 +1,12 @@
 import _ from "lodash";
-import firebase from 'firebase/app';
+
+import firebase from 'firebase';
 import 'firebase/firestore';
 
 export default {
     async add(path: string, data: any): Promise<any> {
-        const collection = firebase.firestore().collection(path);
+        const db = firebase.firestore()
+        const collection = db.collection(path);
         const toAdd = _.toPlainObject(data);
         const added = await collection.add(toAdd);
         return added.id;

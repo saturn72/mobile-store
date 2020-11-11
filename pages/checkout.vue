@@ -48,13 +48,13 @@
                 full-width
                 flat
                 outlined
-                placeholder="Feel free to add any commentand/or request you may have"
+                placeholder="Feel free to add any comment and/or request you may have"
                 rows="2"
                 prepend-icon="mdi-comment-text-outline"
                 single-line
                 dense
                 class="mx-2"
-                v-model="orderComment"
+                v-model="comment"
               >
               </v-textarea>
             </v-col>
@@ -95,63 +95,71 @@
     </v-card>
   </v-container>
 </template>
-<script>
+<script lang="ts">
+const legalPhoneLength: number = 7
+import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 import orderHandler from '@/services/orderHandler'
-export default {
+export default Vue.extend({
   computed: {
     ...mapGetters('cart', [
+      'getCart',
       'getCartItemsCount',
       'getPhonePrefix',
       'getPhoneNumber',
+      'getComment',
     ]),
     phonePrefix: {
-      get: function () {
+      get: function (): string {
         return this.getPhonePrefix()
       },
-      set: function (prefix) {
-        console.log(prefix)
+      set: function (prefix: string): void {
         this.setPhonePrefix(prefix)
       },
     },
     phoneNumber: {
-      get: function () {
+      get: function (): string {
         return this.getPhoneNumber()
       },
-      set: function (num) {
+      set: function (num: string): void {
         this.setPhoneNumber(num)
+      },
+    },
+    comment: {
+      get: function (): string {
+        return this.getComment()
+      },
+      set: function (c: string): void {
+        this.setComment(c)
       },
     },
   },
   methods: {
-    ...mapActions(['setPhonePrefix', 'setPhoneNumber']),
+    ...mapActions(['setPhonePrefix', 'setPhoneNumber', 'setComment']),
     canPlaceOrder() {
       return this.valid && this.getCartItemsCount() > 0
     },
     async placeOrder() {
       this.orderOverlay = true
-      await orderHandler.placeOrder()
+      await orderHandler.placeOrder(this.getCart())
       this.orderOverlay = false
     },
   },
-  data() {
-    return {
-      valid: false,
-      orderOverlay: false,
-      orderComment: '',
-      phoneNumberMeta: {
-        requiredPhoneLength: 7,
-        value: '',
-        phonePrefixOptions: ['050', '051', '052', '053', '054', '055', '058'],
-        rules: [
-          (v) => !!v || 'מספר טלפון נדרש לביצוע הזמנה',
-          (v) =>
-            (v && v.length === this.phoneNumber.requiredPhoneLength) ||
-            'נא להזין מספר טלפון חוקי (ללא קידומת)',
-        ],
-      },
-      submittingOrder: false,
-    }
-  },
-}
+  data: () => ({
+    valid: false,
+    orderOverlay: false,
+    requiredPhoneLength: legalPhoneLength,
+    phoneNumberMeta: {
+      value: '',
+      phonePrefixOptions: ['050', '051', '052', '053', '054', '055', '058'],
+      rules: [
+        (v: string) => !!v || 'מספר טלפון נדרש לביצוע הזמנה',
+        (v: string) =>
+          (v && v.length === legalPhoneLength) ||
+          'נא להזין מספר טלפון חוקי (ללא קידומת)',
+      ],
+    },
+    submittingOrder: false,
+  }),
+})
 </script>

@@ -1,0 +1,10 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@firebase/testing": "^0.20.11",
+    "mocha": "^8.2.1"
+  }
+}

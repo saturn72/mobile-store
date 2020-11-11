@@ -1,8 +1,8 @@
 export interface Product {
-    id: String
+    id: string
     name: string;
-    shortDescription: String;
-    fullDescription: String;
+    shortDescription: string;
+    fullDescription: string;
     price: number;
 
     media: {
@@ -13,9 +13,9 @@ export interface Product {
 };
 
 export interface MediaItem {
-    id: String;
-    src: String;
-    description: String;
+    id: string;
+    src: string;
+    description: string;
     isPrimary: boolean,
     displayOrder: number
 };
@@ -23,11 +23,28 @@ export interface MediaItem {
 export interface CartItem {
     quantity: number,
     product: Product,
-    updatedOnUtc: Date | number
+    updatedOnUtc: string | Date | number
 };
 
 export interface Cart {
     cartItems: CartItem[],
-    phonePrefix: String,
-    phoneNumber: String
+    phonePrefix: string,
+    phoneNumber: string,
+    comment: string
 };
+
+export interface Order {
+    id: string | undefined | null,
+    productRecords: Array<OrderProcutRecord>,
+    userId: string,
+    createdOnUtc: string | Date | number
+    phonePrefix: string,
+    phoneNumber: string,
+    comment: string
+};
+
+export interface OrderProcutRecord {
+    quantity: number,
+    productId: string,
+};
+
