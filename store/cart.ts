@@ -29,16 +29,10 @@ const buildCartRecord = (product: Product, quantity: number): CartItem => {
 export const mutations = {
     clearCart(state: Cart): void {
         const cartBefore = _.cloneDeep(state);
-        state = {
-            phonePrefix: '',
-            phoneNumber: '',
-            cartItems: [],
-            comment: ''
-        };
-
+        state.cartItems = [];
+        state.comment = '';
         const cartAfter = _.cloneDeep(state);
         cartHandler.onCartChanged(cartBefore, cartAfter);
-
     },
     incrementCartProduct(
         state: Cart,

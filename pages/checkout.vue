@@ -96,10 +96,12 @@
   </v-container>
 </template>
 <script lang="ts">
-const legalPhoneLength: number = 7
 import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
-import orderHandler from '@/services/orderHandler'
+import orderUtil from '@/utilities/orderUtil'
+import routeUtil from '@/utilities/routeUtils'
+
+const legalPhoneLength: number = 7
 export default Vue.extend({
   computed: {
     ...mapGetters('cart', [
@@ -146,10 +148,11 @@ export default Vue.extend({
     },
     async placeOrder() {
       this.orderOverlay = true
-      const order = await orderHandler.placeOrder(this.getCart())
-      console.log(order)
+      const order = await orderUtil.placeOrder(this.getCart())
       this.clearCart()
       this.orderOverlay = false
+      const text = orderUtil.orderToWhatsappText(order)
+      routeUtil.redirectToWhatsapp(text)
     },
   },
   data: () => ({

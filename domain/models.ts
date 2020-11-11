@@ -40,7 +40,8 @@ export interface Order {
     createdOnUtc: string | Date | number
     phonePrefix: string,
     phoneNumber: string,
-    comment: string
+    comment: string,
+    link: string | undefined | null
 };
 
 export interface OrderProcutRecord {

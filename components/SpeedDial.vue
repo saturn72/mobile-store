@@ -40,6 +40,7 @@
 <script>
 const CheckoutPath = 'checkout'
 import { mapGetters } from 'vuex'
+import routeUtils from '~/utilities/routeUtils'
 export default {
   computed: {
     ...mapGetters('cart', ['getCartItemsCount']),
@@ -56,7 +57,7 @@ export default {
       this.redirectTo('tel:+972542204119')
     },
     whatsapp() {
-      this.redirectTo('https://wa.me/972542204119?text=יש%20לי%20שאלה:%0D%0A')
+      routeUtils.redirectToWhatsapp('יש%20לי%20שאלה:%0D%0A')
     },
     redirectTo(url) {
       window.location.replace(url)
