@@ -1,28 +1,30 @@
 <template>
   <v-container fluid>
-    <!-- <v-speed-dial direction="right" bottom left fixed v-model="fab"> -->
     <SpeedDial />
     <v-data-iterator
       :items="products"
       :items-per-page.sync="products.length"
       hide-default-footer
+      v-bind:page="1"
       :search="search"
-      :custom-filter="filter"
     >
+      <!-- :custom-filter="filter" -->
       <template v-slot:header>
         <v-row>
           <v-card dense style="position: fixed; width: 95%; z-index: 1">
             <v-banner sticky>
-              <v-btn
-                class="ml-3"
-                v-for="cb in extractCategories()"
-                :key="cb.name"
-                rounded
-                @click="toggleSearch(cb)"
-              >
-                {{ cb.name }}
-                <v-icon v-if="cb.selected" class="mr-1">mdi-close</v-icon>
-              </v-btn>
+              <v-btn-toggle tile dense>
+                <v-btn
+                  class="ml-3"
+                  v-for="cb in extractCategories()"
+                  :key="cb.name"
+                  rounded
+                  @click="toggleSearch(cb)"
+                >
+                  {{ cb.name }}
+                  <v-icon v-if="cb.selected" class="mr-1">mdi-close</v-icon>
+                </v-btn>
+              </v-btn-toggle>
             </v-banner>
           </v-card>
         </v-row>
@@ -47,21 +49,21 @@
           </v-banner>
         </v-row>
       </template>
-
-      <VendorStoreHeader />
-      <v-divider />
-      <v-row align="center">
-        <v-col
-          cols="12"
-          lg="3"
-          md="6"
-          sm="12"
-          v-for="product in products"
-          v-bind:key="product.id"
-        >
-          <ProductCard :product="product" />
-        </v-col>
-      </v-row>
+      <v-row id="vendor-header"> <VendorStoreHeader /> </v-row><v-divider />
+      <template v-slot:default="props">
+        <v-row align="center">
+          <v-col
+            v-for="item in props.items"
+            cols="12"
+            lg="3"
+            md="6"
+            sm="12"
+            v-bind:key="item.id"
+          >
+            <ProductCard :product="item" />
+          </v-col>
+        </v-row>
+      </template>
     </v-data-iterator>
   </v-container>
 </template>
@@ -79,14 +81,15 @@ export default {
       this.search = ''
     },
     toggleSearch(selectedCategory) {
+      console.log(selectedCategory.selected)
       selectedCategory.selected = !selectedCategory.selected
-      this.collapse = !selectedCategory.selected
+      // this.collapse = !selectedCategory.selected
       if (selectedCategory.selected) {
         this.search = selectedCategory.name
       } else {
         this.search = this.search?.replace(selectedCategory.name, '') || ''
       }
-      this.$vuetify.goTo('#logo')
+      // this.$vuetify.goTo('#vendor-header')
     },
     filter(items, s) {
       s = s?.trim()
@@ -99,7 +102,9 @@ export default {
     extractCategories() {
       let arr = []
       this.products.forEach((p) => (arr = _.uniq([...arr, ...p.categories])))
-      return arr
+      return arr.map((c) => {
+        return { name: c, selected: false }
+      })
     },
   },
   data() {
@@ -107,7 +112,8 @@ export default {
       search: '',
       fab: false,
       collapse: false,
-      products: [
+categories: extract categories on mounted
+products: [
         {
           id: '1',
           name: 'product_1',
