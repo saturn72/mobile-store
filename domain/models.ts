@@ -1,10 +1,27 @@
+export interface Category {
+    id: string
+    name: string;
+    selected: boolean,
+    shortDescription: string;
+    fullDescription: string;
+    priceRange: {
+        minPrice: number;
+        maxPrice: number;
+    };
+    categories: string[];
+    media: {
+        images: Array<MediaItem>;
+        videos: Array<MediaItem>;
+    };
+};
+
 export interface Product {
     id: string
     name: string;
     shortDescription: string;
     fullDescription: string;
     price: number;
-
+    categories: string[];
     media: {
         cartImage: string;
         images: Array<MediaItem>;
@@ -35,7 +52,7 @@ export interface Cart {
 
 export interface Order {
     id: string | undefined | null,
-    productRecords: Array<OrderProcutRecord>,
+    productRecords: Array<OrderProductRecord>,
     userId: string,
     createdOnUtc: string | Date | number
     phonePrefix: string,
@@ -44,7 +61,7 @@ export interface Order {
     link: string | undefined | null
 };
 
-export interface OrderProcutRecord {
+export interface OrderProductRecord {
     quantity: number,
     product: Product,
 };

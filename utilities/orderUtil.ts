@@ -1,10 +1,10 @@
 import fb from '@/firebaseAdapter'
-import { Cart, Order, OrderProcutRecord } from '~/domain/models';
+import { Cart, Order, OrderProductRecord } from '~/domain/models';
 import dateTimeUtil from '~/utilities/dateTimeUtil';
 
 const orderToMessageText = (order: Order): string => `Hi,\nRegard my order: ${order.link ?? ''}`;
 const cartToOrder = (cart: Cart): Order => {
-    const prs: OrderProcutRecord[] = [];
+    const prs: OrderProductRecord[] = [];
     cart.cartItems.forEach(ci => prs.push({
         quantity: ci.quantity,
         product: ci.product

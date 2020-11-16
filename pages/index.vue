@@ -1,7 +1,4 @@
 <template>
-  <div>
-    <VendorStore />
-  </div>
+  <VendorStore />
 </template>
-
-
+<script>

@@ -68,7 +68,7 @@
                 block
                 @click="placeOrder()"
               >
-                <v-icon class="mx-1">mdi-check-outline</v-icon>
+                <v-icon class="mx-1">mdi-cart-arrow-right</v-icon>
                 Approve Order
               </v-btn>
             </v-col>

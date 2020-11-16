@@ -18,61 +18,30 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-navigation-drawer
-      v-model="cartDrawer"
-      fixed
-      app
-      left
-      width="auto"
-      height="80%"
-    >
-      <v-card>
-        <v-list-item>
-          <v-list-item-content>
-            <v-row>
-              <v-list-item-title class="title">
-                <v-list-item-avatar>
-                  <v-icon>mdi-cart</v-icon>
-                </v-list-item-avatar>
-                Shopping Cart
-              </v-list-item-title>
-            </v-row>
-          </v-list-item-content>
-        </v-list-item>
-        <CartSummary />
-        <v-btn
-          class="ma-2"
-          block
-          color="success"
-          to="/checkout"
-          :disabled="getCartItemsCount() === 0"
-        >
-          <v-icon>mdi-cart-check</v-icon>
-          Checkout
-        </v-btn>
-      </v-card>
-    </v-navigation-drawer>
-
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="menuDrawer = !menuDrawer" />
+    <v-app-bar :clipped-left="clipped" fixed app collapse-on-scroll>
+      <v-app-bar-nav-icon
+        title="mdi-magnify"
+        @click="menuDrawer = !menuDrawer"
+        @click.stop="searchActive = false"
+      />
       <v-spacer />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn icon @click.stop="cartDrawer = !cartDrawer">
-        <v-badge
-          v-if="getCartItemsCount() > 0"
-          v-bind:content="getCartItemsCount()"
-          color="success"
-        >
-        </v-badge>
-        <v-icon>mdi-cart</v-icon>
+      <v-btn
+        icon
+        @click="searchActive = !searchActive"
+        @click.stop="menuDrawer = false"
+      >
+        <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-app-bar>
   </div>
 </template>
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
-export default {
+
+export default Vue.extend({
   computed: {
     ...mapGetters('cart', ['getCartItemsCount']),
   },
@@ -80,7 +49,7 @@ export default {
     return {
       clipped: false,
       menuDrawer: false,
-      cartDrawer: false,
+      searchActive: false,
       fixed: false,
       items: [
         {
@@ -97,5 +66,5 @@ export default {
       title: 'קדם מרקט',
     }
   },
-}
+})
 </script>
