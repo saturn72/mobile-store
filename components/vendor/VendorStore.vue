@@ -9,7 +9,6 @@
     <v-row id="vendor-header">
       <VendorStoreHeader />
     </v-row>
-
     <v-divider />
     <v-data-iterator
       :items="products"

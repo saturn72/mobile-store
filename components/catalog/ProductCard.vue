@@ -80,7 +80,6 @@ const mediaTypes = {
   image: 'img',
   video: 'video',
 }
-import VendorStoreHeader from './VendorStoreHeader'
 import { mapActions, mapGetters } from 'vuex'
 import { Product } from '@/domain/models'
 export default {

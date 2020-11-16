@@ -42,9 +42,7 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 
 export default Vue.extend({
-  computed: {
-    ...mapGetters('cart', ['getCartItemsCount']),
-  },
+  name: 'AppBar',
   data() {
     return {
       clipped: false,
