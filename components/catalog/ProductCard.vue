@@ -28,20 +28,7 @@
     </v-row>
     <v-row dense>
       <v-col cols="8" dense>
-        <v-text-field
-          dense
-          append-outer-icon="mdi-minus-circle-outline"
-          append-icon="mdi-cart"
-          prepend-icon="mdi-plus-circle-outline"
-          @click:prepend="incrementCartItem(product)"
-          @click:append-outer="decrementCartItem(product)"
-          v-bind:key="product.id"
-          outlined
-          readonly
-          rounded
-          v-bind:value="getCartItemQuantity(product)"
-        >
-        </v-text-field>
+        <AddSubtractProduct :product="product" icon="mdi-cart" />
       </v-col>
       <v-col cols="4" dense> </v-col>
     </v-row>
@@ -75,23 +62,27 @@
     </v-expand-transition>
   </v-card>
 </template>
-<script>
+  <script lang="ts">
 const mediaTypes = {
   image: 'img',
   video: 'video',
 }
 import { mapActions, mapGetters } from 'vuex'
-import { Product } from '@/domain/models'
-export default {
+import { MediaItem, Product } from '@/domain/models'
+import Vue from 'vue'
+export default Vue.extend({
   props: {
-    product: Product,
+    product: { type: Object as () => Product },
   },
   computed: {
     ...mapGetters('cart', ['getCartItemQuantity']),
   },
   methods: {
     ...mapActions(['incrementCartItem', 'decrementCartItem']),
-    mediaToCarouselItems: function (media) {
+    mediaToCarouselItems: function (media: {
+      images: MediaItem[]
+      videos: MediaItem[]
+    }) {
       const imgs = media.images.map((i) => {
         return {
           type: mediaTypes.image,
@@ -123,5 +114,5 @@ export default {
       },
     }
   },
-}
+})
 </script>

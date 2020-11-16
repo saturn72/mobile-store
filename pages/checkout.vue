@@ -10,9 +10,7 @@
       <v-card-text>
         <v-form ref="form" v-model="valid">
           <v-row>
-            <v-col>
-              <CartSummary />
-            </v-col>
+            <CartSummary />
           </v-row>
           <v-row align="start">
             <v-col class="d-flex" cols="7">
