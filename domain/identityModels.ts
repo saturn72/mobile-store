@@ -4,5 +4,6 @@ export interface User {
     email: string | undefined;
     emailVerified: boolean;
     claims: string[] | undefined
+    token: string | undefined;
 };
 

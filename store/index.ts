@@ -11,33 +11,28 @@ export default {
                 const { allClaims: claims, idToken: token, ...authUser } = res.locals.user
 
                 await dispatch('onAuthStateChangedAction', {
-                    authUser,
+                    ...authUser,
                     claims,
                     token
                 })
 
-                // or
+                // // or
 
-                commit('ON_AUTH_STATE_CHANGED_MUTATION', { authUser, claims, token })
+                // commit('ON_AUTH_STATE_CHANGED_MUTATION', { authUser, claims, token })
             }
         },
-        incrementCartItem(ctx: any, product: Product) {
-            ctx.commit("cart/incrementCartProduct", product)
-        },
-        decrementCartItem(ctx: any, product: Product) {
-            ctx.commit("cart/decrementCartProduct", product)
-        },
-        setPhonePrefix(ctx: any, phonePrefix: string) {
-            ctx.commit("cart/setPhonePrefix", phonePrefix)
-        },
-        setPhoneNumber(ctx: any, phoneNumber: string) {
-            ctx.commit("cart/setPhoneNumber", phoneNumber)
-        },
-        setComment(ctx: any, comment: string) {
-            ctx.commit("cart/setComment", comment)
-        },
-        clearCart(ctx: any) {
-            ctx.commit("cart/clearCart")
+        //auth
+        cleanupAction(ctx: any, payload: any) {
+            console.log("cleanupAction")
+            console.log("cleanupAction")
+            console.log("cleanupAction")
+            console.log("cleanupAction")
+            console.log("cleanupAction")
+            console.log("cleanupAction")
+            console.log(payload)
+            console.log(payload)
+            console.log(payload)
+            console.log(payload)
         },
         async onAuthStateChangedAction({ commit, dispatch }: any, { authUser, claims }: any) {
             if (!authUser) {
@@ -57,6 +52,25 @@ export default {
                 // use custom claims to control access (see https://firebase.google.com/docs/auth/admin/custom-claims)
                 isAdmin: claims.custom_claim
             })
+        },
+        //cart
+        incrementCartItem(ctx: any, product: Product) {
+            ctx.commit("cart/incrementCartProduct", product)
+        },
+        decrementCartItem(ctx: any, product: Product) {
+            ctx.commit("cart/decrementCartProduct", product)
+        },
+        setPhonePrefix(ctx: any, phonePrefix: string) {
+            ctx.commit("cart/setPhonePrefix", phonePrefix)
+        },
+        setPhoneNumber(ctx: any, phoneNumber: string) {
+            ctx.commit("cart/setPhoneNumber", phoneNumber)
+        },
+        setComment(ctx: any, comment: string) {
+            ctx.commit("cart/setComment", comment)
+        },
+        clearCart(ctx: any) {
+            ctx.commit("cart/clearCart")
         }
     }
 };
