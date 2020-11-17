@@ -1,57 +1,26 @@
 import { Product } from "~/domain/models";
 import createPersistedState from "vuex-persistedstate";
+import firebase from "firebase";
 
 export const plugins = [createPersistedState];
 
 export default {
     actions: {
         // Store action called nuxtServerInit:
-        async nuxtServerInit({ dispatch, commit }: any, { res }: any) {
+        async nuxtServerInit({ commit }: any, { res }: any) {
             if (res && res.locals && res.locals.user) {
-                const { allClaims: claims, idToken: token, ...authUser } = res.locals.user
-
-                await dispatch('onAuthStateChangedAction', {
-                    ...authUser,
-                    claims,
-                    token
-                })
-
-                // // or
-
-                // commit('ON_AUTH_STATE_CHANGED_MUTATION', { authUser, claims, token })
+                const u = { ...res.locals.user }
+                commit('auth/ON_AUTH_STATE_CHANGED_MUTATION', u);
             }
         },
         //auth
-        cleanupAction(ctx: any, payload: any) {
-            console.log("cleanupAction")
-            console.log("cleanupAction")
-            console.log("cleanupAction")
-            console.log("cleanupAction")
-            console.log("cleanupAction")
-            console.log("cleanupAction")
-            console.log(payload)
-            console.log(payload)
-            console.log(payload)
-            console.log(payload)
-        },
-        async onAuthStateChangedAction({ commit, dispatch }: any, { authUser, claims }: any) {
+        async onAuthStateChangedAction({ commit }: any, { authUser, claims }: any) {
             if (!authUser) {
-                await dispatch('cleanupAction')
+                await firebase.auth().signInAnonymously();
                 return
             }
-
-            // you can request additional fields if they are optional (e.g. photoURL)
-            const { uid, email, emailVerified, displayName, photoURL } = authUser
-
-            commit('SET_USER', {
-                uid,
-                email,
-                emailVerified,
-                displayName,
-                photoURL, // results in photoURL being undefined for server auth
-                // use custom claims to control access (see https://firebase.google.com/docs/auth/admin/custom-claims)
-                isAdmin: claims.custom_claim
-            })
+            const u = { ...authUser, claims }
+            commit('auth/ON_AUTH_STATE_CHANGED_MUTATION', u);
         },
         //cart
         incrementCartItem(ctx: any, product: Product) {
