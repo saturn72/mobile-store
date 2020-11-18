@@ -1,7 +1,7 @@
-const WHATSAPP_URL = 'https://wa.me/972542204119?text=';
+const whatsAppLink = (phone: string, text: string): string => `https://wa.me/${phone}?text=${text}`;
 export default {
     redirectTo: (url: string): void => window.location.replace(url),
-    redirectToWhatsapp: (text: string): void => {
-        window.location.replace(`${WHATSAPP_URL}${text}`);
-    }
+    redirectToWhatsapp: (phone: string, text: string): void => {
+        window.location.replace(whatsAppLink(phone, text));
+    },
 }

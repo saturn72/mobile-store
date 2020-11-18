@@ -91,6 +91,9 @@ export const mutations = {
     },
 }
 export const getters = {
+    getInternationalPhoneNumber: (state: Cart) => (): string => {
+        return `+972${state.phonePrefix.slice(1)}${state.phoneNumber}`
+    },
     getPhonePrefix: (state: Cart) => (): string => {
         return state.phonePrefix;
     },

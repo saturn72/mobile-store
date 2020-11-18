@@ -18,22 +18,23 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app collapse-on-scroll>
-      <v-app-bar-nav-icon
-        title="mdi-magnify"
-        @click="menuDrawer = !menuDrawer"
-        @click.stop="searchActive = false"
-      />
+    <v-app-bar
+      :clipped-left="clipped"
+      fixed
+      app
+      shrink-on-scroll
+      collapse-on-scroll
+      elevate-on-scroll
+      prominent
+      src="https://kedemmarket.co.il/wp-content/uploads/2020/07/logodesign-scaled.jpg"
+      fade-img-on-scroll
+      color="blue-grey lighten-4"
+    >
+      <UserMenu v-bind:size="100" />
+
       <v-spacer />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn
-        icon
-        @click="searchActive = !searchActive"
-        @click.stop="menuDrawer = false"
-      >
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
     </v-app-bar>
   </div>
 </template>
@@ -42,12 +43,10 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 
 export default Vue.extend({
-  name: 'AppBar',
   data() {
     return {
       clipped: false,
       menuDrawer: false,
-      searchActive: false,
       fixed: false,
       items: [
         {

@@ -2,7 +2,7 @@ import fb from '@/firebaseAdapter'
 import { Cart, Order, OrderProductRecord } from '~/domain/models';
 import dateTimeUtil from '~/utilities/dateTimeUtil';
 
-const orderToMessageText = (order: Order): string => `Hi,\nRegard my order: ${order.link ?? ''}`;
+const orderToMessageText = (order: Order): string => `Hi,\nRegard my order: ${order.link ?? order.id ?? ''}`;
 const cartToOrder = (cart: Cart): Order => {
     const prs: OrderProductRecord[] = [];
     cart.cartItems.forEach(ci => prs.push({

@@ -17,10 +17,25 @@ export default {
         async onAuthStateChangedAction({ commit }: any, { authUser, claims }: any) {
             if (!authUser) {
                 await firebase.auth().signInAnonymously();
-                return
             }
-            const u = { ...authUser, claims }
-            commit('auth/ON_AUTH_STATE_CHANGED_MUTATION', u);
+            else {
+                const u = { ...authUser, claims }
+                commit('auth/ON_AUTH_STATE_CHANGED_MUTATION', u);
+            }
+
+            if (!claims || !claims['phone']) {
+                return;
+            }
+            let phone: string = claims['phone'];
+            phone = phone.replaceAll('-', '').replaceAll('+', '').replaceAll('972', '');
+            if (!phone.startsWith('0')) {
+                phone = `0${phone}`;
+            }
+
+            const phonePrefix = phone.substring(0, 3)
+            commit("cart/setPhonePrefix", phonePrefix)
+            const phoneNumber = phone.substring(3)
+            commit("cart/setPhoneNumber", phoneNumber)
         },
         //cart
         incrementCartItem(ctx: any, product: Product) {

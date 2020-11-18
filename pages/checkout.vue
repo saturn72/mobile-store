@@ -149,8 +149,12 @@ export default Vue.extend({
       const order = await orderUtil.placeOrder(this.getCart())
       this.clearCart()
       this.orderOverlay = false
-      const text = orderUtil.orderToWhatsappText(order)
-      routeUtil.redirectToWhatsapp(text)
+      this.$router.push({
+        name: 'thankyou',
+        params: {
+          order: order,
+        },
+      })
     },
   },
   data: () => ({
