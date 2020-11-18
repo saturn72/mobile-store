@@ -11,4 +11,7 @@ export default {
         const added = await collection.add(toAdd);
         return added.id;
     },
+    async signout() {
+        await firebase.auth().signOut();
+    }
 }

@@ -1,10 +1,10 @@
 <template>
-  <v-menu offset-y :nudge-right="avatarSize" :close-on-content-click="false">
+  <v-menu offset-y :close-on-content-click="false">
     <template v-slot:activator="{ on, attrs }">
       <v-avatar
         class="profile"
         color="grey"
-        :size="avatarSize"
+        :size="size"
         v-bind="attrs"
         v-on="on"
       >
@@ -46,36 +46,43 @@
       <v-list>
         <v-list-item>
           <v-list-item-action>
-            <v-switch v-model="message" color="purple"></v-switch>
-          </v-list-item-action>
-          <v-list-item-title>Enable messages</v-list-item-title>
-        </v-list-item>
-
-        <v-list-item>
-          <v-list-item-action>
             <v-switch v-model="hints" color="purple"></v-switch>
           </v-list-item-action>
           <v-list-item-title>Enable hints</v-list-item-title>
         </v-list-item>
       </v-list>
 
+      <v-list-item>
+        <v-list-item-action>
+          <v-switch v-model="message" color="cyan"></v-switch>
+        </v-list-item-action>
+        <v-list-item-title>Enable messages</v-list-item-title>
+      </v-list-item>
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-btn ripple text color="primary" @click="signout()">
+          <small><v-icon>mdi-logout</v-icon> Signout</small>
+        </v-btn>
 
-        <v-btn text @click="menu = false"> Cancel </v-btn>
-        <v-btn color="primary" text @click="menu = false"> Save </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn text @click="menu = false"> Close </v-btn>
       </v-card-actions>
     </v-card>
   </v-menu>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import consts from 'utilities/consts'
+import consts from '~/utilities/consts'
+import fb from '~/utilities/firebaseAdapter'
 
 export default Vue.extend({
   props: {
     size: { type: Number, default: 100 },
     img: { type: String, default: consts.UserImage },
+  },
+  methods: {
+    signout() {
+      fb.signout()
+    },
   },
   data() {
     return {

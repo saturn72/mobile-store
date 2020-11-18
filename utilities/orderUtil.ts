@@ -1,4 +1,4 @@
-import fb from '@/firebaseAdapter'
+import fb from '~/utilities/firebaseAdapter'
 import { Cart, Order, OrderProductRecord } from '~/domain/models';
 import dateTimeUtil from '~/utilities/dateTimeUtil';
 
