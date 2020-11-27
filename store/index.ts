@@ -9,7 +9,9 @@ export default {
         // Store action called nuxtServerInit:
         async nuxtServerInit({ commit }: any, { res }: any) {
             if (res && res.locals && res.locals.user) {
-                const u = { ...res.locals.user }
+                const u = {
+                    ...res.locals.user
+                }
                 commit('auth/ON_AUTH_STATE_CHANGED_MUTATION', u);
             }
         },
@@ -19,14 +21,16 @@ export default {
                 await firebase.auth().signInAnonymously();
             }
             else {
-                const u = { ...authUser, claims }
+                const u = {
+                    ...authUser, claims: claims,
+                }
                 commit('auth/ON_AUTH_STATE_CHANGED_MUTATION', u);
             }
 
-            if (!claims || !claims['phone']) {
+            if (!claims || !claims['phone_number']) {
                 return;
             }
-            let phone: string = claims['phone'];
+            let phone: string = claims['phone_number'];
             phone = phone.replaceAll('-', '').replaceAll('+', '').replaceAll('972', '');
             if (!phone.startsWith('0')) {
                 phone = `0${phone}`;

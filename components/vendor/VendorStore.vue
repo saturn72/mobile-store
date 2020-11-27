@@ -54,9 +54,6 @@ export default Vue.extend({
   methods: {
     setSearch(e: Category | string): void {
       this.search = (e as Category)?.name || e || ''
-      console.log('this is data')
-      console.log(e)
-      console.log('this is search' + this.search)
     },
   },
   data(): any {

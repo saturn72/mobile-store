@@ -68,14 +68,6 @@ export default Vue.extend({
           hasBadge: false,
         },
         {
-          icon: 'mdi-login-variant',
-          text: 'Login',
-          value: 'login',
-          to: '/login',
-          badgeColor: 'accent',
-          hasBadge: false,
-        },
-        {
           icon: 'mdi-storefront-outline',
           text: 'Store',
           value: 'store',

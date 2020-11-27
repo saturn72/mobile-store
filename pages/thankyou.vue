@@ -3,7 +3,11 @@
     <v-row dense justify="center">
       <v-card-title>Thank you for your order!</v-card-title>
     </v-row>
-    <v-img src="https://media.giphy.com/media/yo6r0bd9pbqQE/giphy.gif"></v-img>
+    <v-img
+      class="mx-auto"
+      max-width="700"
+      src="https://media.giphy.com/media/yo6r0bd9pbqQE/giphy.gif"
+    ></v-img>
     <v-card-actions>
       <v-row align="center" justify="space-around">
         <v-col cols="10">

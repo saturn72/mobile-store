@@ -4,14 +4,18 @@ export const state = (): User | undefined => undefined;
 
 export const mutations = {
     ON_AUTH_STATE_CHANGED_MUTATION: (state: any, authUser: User) => {
-        if (authUser && authUser.claims) {
-            const u = {
-                ...authUser.claims
+        let u = undefined;
+        if (authUser) {
+            u = {
+                ...authUser
             };
-            state.user = u
         }
-        else {
-            state.user = undefined;
-        }
+        state.user = u
     },
+}
+
+export const getters = {
+    isAnonymous: (state: any | undefined) => (): boolean => {
+        return state?.user?.isAnonymous;
+    }
 }

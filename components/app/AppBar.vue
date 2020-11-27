@@ -1,52 +1,63 @@
 <template>
-  <div>
-    <v-navigation-drawer v-model="menuDrawer" fixed app right>
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
+  <v-app-bar
+    dense
+    :clipped-left="clipped"
+    fixed
+    app
+    shrink-on-scroll
+    collapse-on-scroll
+    elevate-on-scroll
+    prominent
+    fade-img-on-scroll
+    color="blue-grey lighten-4"
+  >
+    <v-row align="center" justify="center">
+      <UserMenu v-if="shouldBeVisible()" v-bind:size="60" />
+      <v-spacer />
+      <v-avatar
+        class="profile"
+        color="grey"
+        width="230"
+        :size="95"
+        v-bind="attrs"
+        v-on="on"
+      >
+        <v-img
+          src="https://kedemmarket.co.il/wp-content/uploads/2020/07/logodesign-scaled.jpg"
         >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-      shrink-on-scroll
-      collapse-on-scroll
-      elevate-on-scroll
-      prominent
-      src="https://kedemmarket.co.il/wp-content/uploads/2020/07/logodesign-scaled.jpg"
-      fade-img-on-scroll
-      color="blue-grey lighten-4"
-    >
-      <UserMenu v-bind:size="100" />
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular
+                indeterminate
+                color="black"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-avatar>
 
-      <v-spacer />
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-    </v-app-bar>
-  </div>
+      <!-- 
+    g
+        alt="logo"
+    </v-avatar>
+      /> -->
+    </v-row>
+  </v-app-bar>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { mapGetters } from 'vuex'
 
+const notVisibleInRouteNames = ['login']
 export default Vue.extend({
+  methods: {
+    shouldBeVisible(): boolean {
+      const curRouteName = this.$route.name
+      return !notVisibleInRouteNames.some((n) => n === curRouteName)
+    },
+  },
   data() {
     return {
       clipped: false,
-      menuDrawer: false,
       fixed: false,
       items: [
         {

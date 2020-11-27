@@ -3,7 +3,8 @@ export interface User {
     displayName: string | undefined;
     email: string | undefined;
     emailVerified: boolean;
-    claims: string[] | undefined
+    claims: any | undefined
     token: string | undefined;
+    isAnonymous: boolean;
 };
 
