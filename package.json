@@ -16,7 +16,7 @@
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/firebase": "^7.1.0",
     "@nuxtjs/pwa": "^3.0.2",
-    "@types/lodash": "^4.14.164",
+    "@types/lodash": "^4.14.178",
     "core-js": "^3.6.5",
     "firebase": "8.0.1",
     "firebaseui": "^4.7.1",
